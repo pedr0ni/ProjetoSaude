@@ -5,8 +5,8 @@ Projeto Saúde ~ Projeto Integrado B PUCC
 
 | Branch        | Descrição                |
 | ------------- |:------------------------:|
-| **master**    | Produção (Apresentação)  |
-| dev           | Desenvolvimento da Equipe|
+| master        | Produção (Apresentação)  |
+| **dev**       | Desenvolvimento da Equipe|
 
 ## Documentação
 
