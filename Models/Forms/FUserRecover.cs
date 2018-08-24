@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace ProjetoSaude.Models.Forms
 {
-    public class IUserRecover
+    public class FUserRecover
     {
 
-        public string cpf { get; set; }
-        public string email { get; set; }
+        public string Cpf { get; set; }
+        public string Email { get; set; }
 
     }
 }

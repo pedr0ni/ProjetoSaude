@@ -72,13 +72,24 @@ namespace ProjetoSaude.Manager
             return this.smtpClient;
         }
 
-        public async void sendRecoveryEmail(string nome, string email)
+        public async Task sendRecoveryEmail(IUser user)
         {
+            IUserRecover recover = new IUserRecover
+            {
+                UserId = user.Id,
+                Token = generateToken(8),
+                Validated = false,
+                Created = Timestamp
+            };
+
+            this._context.UsersRecover.Add(recover);
+            await this._context.SaveChangesAsync();
+
             MailMessage message = new MailMessage();
             message.From = new MailAddress("pedroni.dev@gmail.com");
-            message.To.Add(email);
+            message.To.Add(user.Email);
             message.IsBodyHtml = true;
-            message.Body =  this.getEmailBody().Replace("%nome%", nome);
+            message.Body = this.getEmailBody().Replace("%nome%", user.Nome).Replace("%token%", recover.Token);
             message.Subject = "Recuperação de Conta - Projeto Saúde";
             await this.smtpClient.SendMailAsync(message);
         }
@@ -90,5 +101,30 @@ namespace ProjetoSaude.Manager
             sr.Close();
             return result;
         }
+
+        private string generateToken(int length)
+        {
+            Random rnd = new Random();
+            string keys = "abcdefghijklmnopqrstuvwxyz0123456789";
+            string result = "";
+            for (int i = 0; i < length; i++)
+            {
+                result += keys[rnd.Next(keys.Length)];
+            }
+            return result.ToUpper();
+        }
+
+        /// <summary>
+        /// Get current time in milliseconds (Unix TimeStamp)
+        /// </summary>
+        /// <returns>long with the timestamp</returns>
+        public long Timestamp {
+            get
+            {
+                var timeSpan = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
+                return (long)timeSpan.TotalSeconds;
+            }
+        }
+
     }
 }

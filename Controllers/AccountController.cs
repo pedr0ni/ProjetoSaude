@@ -98,21 +98,19 @@ namespace ProjetoSaude.Controllers
 
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> InputRecover(IUserRecover user)
+        public async Task<IActionResult> InputRecover(FUserRecover user)
         {
-            /*List<Dictionary<string, object>> rows = this._userDatabase.custom("SELECT nome FROM users WHERE cpf = '" + user.cpf + "' AND email = '" + user.email + "'", new string[] { "nome" });
-
-            if (rows.Count > 0)
+            IUser result = this._appManager.getDatabase().Users.SingleOrDefault(u => u.Cpf == user.Cpf && u.Email == user.Email);
+            if (result != null)
             {
                 Response.Cookies.Append("Type", "success");
-                Response.Cookies.Append("Message", "Enviamos um e-mail para " + user.email + " com instruções para recuperar a senha.");
-                this._appManager.sendRecoveryEmail(rows.First()["nome"].ToString(), user.email);
+                Response.Cookies.Append("Message", "Enviamos um e-mail para " + result.Email + " com instruções para recuperar a senha.");
+                await this._appManager.sendRecoveryEmail(result);
             } else
             {
                 Response.Cookies.Append("Type", "danger");
                 Response.Cookies.Append("Message", "Não existe nenhuma conta com esse CPF e E-mail.");
             }
-            */
             return RedirectToAction("Recover", "Account");
         }
 
@@ -127,6 +125,59 @@ namespace ProjetoSaude.Controllers
                 Response.Cookies.Delete("Message");
             }
             return View();
+        }
+
+        [AllowAnonymous]
+        public IActionResult Validate()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AllowAnonymous]
+        public async Task<IActionResult> InputValidate(FValidateToken validateToken)
+        {
+            IUser user = this._appManager.getDatabase().Users.SingleOrDefault(u => u.Cpf == validateToken.Cpf);
+
+            if (user == null)
+            {
+                Response.Cookies.Append("Type", "danger");
+                Response.Cookies.Append("Message", "O CPF inserido não existe.");
+                return RedirectToAction("Validate", "Account");
+            }
+
+            IUserRecover recover = this._appManager.getDatabase().UsersRecover.SingleOrDefault(r => r.Token == validateToken.Token && r.UserId == user.Id);
+
+            if (recover == null)
+            {
+                Response.Cookies.Append("Type", "danger");
+                Response.Cookies.Append("Message", "O Token inserido está incorreto.");
+                return RedirectToAction("Recover", "Account");
+            }
+
+            if (recover.Validated)
+            {
+                Response.Cookies.Append("Type", "warning");
+                Response.Cookies.Append("Message", "O Token inserido já foi validado.");
+                return RedirectToAction("Recover", "Account");
+            }
+
+            if (new Cripto(validateToken.NovaSenha).Encrypted == user.Senha)
+            {
+                Response.Cookies.Append("Type", "danger");
+                Response.Cookies.Append("Message", "Você não pode utilizar uma senha igual a antiga.");
+                return RedirectToAction("Validate", "Account");
+            }
+
+            user.Senha = new Cripto(validateToken.NovaSenha).Encrypted;
+            recover.Validated = true;
+
+            this._appManager.getDatabase().UsersRecover.Update(recover);
+            this._appManager.getDatabase().Users.Update(user);
+            await this._appManager.getDatabase().SaveChangesAsync();
+
+            return RedirectToAction("Login", "Account");
         }
 
     }
