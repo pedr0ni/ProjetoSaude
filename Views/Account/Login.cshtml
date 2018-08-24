@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Login</h2>
+
+<hr />
+
+@if (ViewData["Message"] != null && ViewData["Type"] != null)
+{
+    <div class="alert alert-@ViewData["type"]">
+        @ViewData["message"]
+    </div>
+}
+
+    <form asp-controller="Account" asp-action="InputLogin" method="post">
+        <div class="form-group">
+            <label>CPF</label>
+            <input id="cpf" name="cpf" type="text" class="form-control" placeholder="Ex. 12345678912">
+        </div>
+        <div class="form-group">
+            <label>Senha</label>
+            <input id="senha" name="senha" type="password" class="form-control" placeholder="Digite sua senha">
+        </div>
+        <input name="ReturnUrl" value="@Context.Request.Query["ReturnUrl"]" hidden />
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-primary">ENTRAR</button>
+        <a asp-area="" asp-controller="Account" asp-action="Recover" class="pull-right">Esqueci minha senha</a>
+    </form>

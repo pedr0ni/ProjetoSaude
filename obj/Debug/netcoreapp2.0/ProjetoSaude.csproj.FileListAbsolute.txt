@@ -1,0 +1,11 @@
+C:\Users\PEDRONI\Documents\PUCC\Projeto B\ProjetoSaude\ProjetoSaude\bin\Debug\netcoreapp2.0\ProjetoSaude.deps.json
+C:\Users\PEDRONI\Documents\PUCC\Projeto B\ProjetoSaude\ProjetoSaude\bin\Debug\netcoreapp2.0\ProjetoSaude.runtimeconfig.json
+C:\Users\PEDRONI\Documents\PUCC\Projeto B\ProjetoSaude\ProjetoSaude\bin\Debug\netcoreapp2.0\ProjetoSaude.runtimeconfig.dev.json
+C:\Users\PEDRONI\Documents\PUCC\Projeto B\ProjetoSaude\ProjetoSaude\bin\Debug\netcoreapp2.0\ProjetoSaude.dll
+C:\Users\PEDRONI\Documents\PUCC\Projeto B\ProjetoSaude\ProjetoSaude\bin\Debug\netcoreapp2.0\ProjetoSaude.pdb
+C:\Users\PEDRONI\Documents\PUCC\Projeto B\ProjetoSaude\ProjetoSaude\obj\Debug\netcoreapp2.0\ProjetoSaude.csprojAssemblyReference.cache
+C:\Users\PEDRONI\Documents\PUCC\Projeto B\ProjetoSaude\ProjetoSaude\obj\Debug\netcoreapp2.0\ProjetoSaude.csproj.CoreCompileInputs.cache
+C:\Users\PEDRONI\Documents\PUCC\Projeto B\ProjetoSaude\ProjetoSaude\obj\Debug\netcoreapp2.0\ProjetoSaude.AssemblyInfoInputs.cache
+C:\Users\PEDRONI\Documents\PUCC\Projeto B\ProjetoSaude\ProjetoSaude\obj\Debug\netcoreapp2.0\ProjetoSaude.AssemblyInfo.cs
+C:\Users\PEDRONI\Documents\PUCC\Projeto B\ProjetoSaude\ProjetoSaude\obj\Debug\netcoreapp2.0\ProjetoSaude.dll
+C:\Users\PEDRONI\Documents\PUCC\Projeto B\ProjetoSaude\ProjetoSaude\obj\Debug\netcoreapp2.0\ProjetoSaude.pdb
