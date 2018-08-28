@@ -24,5 +24,10 @@ namespace ProjetoSaude.Models
         public bool Status { get; set; }
 
         public string Perfil { get; set; }
+
+        public bool isAdmin()
+        {
+            return this.Perfil == "ADMIN";
+        }
     }
 }

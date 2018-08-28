@@ -29,12 +29,27 @@ namespace ProjetoSaude
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<IDatabaseContext>(options =>
+            /* 
+             * Use para Banco de Dados InMemory
+            services.AddEntityFrameworkInMemoryDatabase().AddDbContext<IDatabaseContext>(options =>
             {
-                // options.UseMySql(Configuration["ConnectionString"]);
                 options.UseInMemoryDatabase("SaudeDb");
             });
+            */
 
+            /*
+             * Use para Banco de Dados MySql.
+             * Connection String definida no appsettings.json
+             */
+            services.AddDbContext<IDatabaseContext>(options =>
+            {
+                options.UseMySql(Configuration["ConnectionString"]);
+            });
+
+
+            /*
+             * Adiciona o serviço de autenticação por Cookie
+             */
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
             options =>
             {
@@ -48,8 +63,11 @@ namespace ProjetoSaude
             });
 
             services.AddMvc();
-            
-            services.AddTransient(m => new AppManager(services.BuildServiceProvider().GetService<IDatabaseContext>()));
+                
+            /*
+             * Adiciona um "service"custom que é instanciado no construtor de cada Controller
+             */
+            services.AddTransient(m => new AppManager());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

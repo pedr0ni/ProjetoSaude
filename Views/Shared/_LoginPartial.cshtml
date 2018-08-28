@@ -1,10 +1,18 @@
 ﻿@using ProjetoSaude.Manager
+@using ProjetoSaude.Data
+
 @inject AppManager appManager
-@if (appManager.isLogged(Context))
+@inject IDatabaseContext Database
+
+@{
+    IUser logged = appManager.getLoggedUser(Context, Database);
+}
+
+@if (logged != null)
 {
-    IUser logged = appManager.getLoggedUser(Context);
+    
     <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" data-toggle="modal" data-target="modalEdit"><span class="glyphicon glyphicon-user"></span> @logged.Nome</a></li>
+        <li><a href="#" data-toggle="modal" data-target="#editModal"><span class="glyphicon glyphicon-user"></span> @logged.Nome</a></li>
         <li><a asp-area="" asp-controller="Account" asp-action="Logout"><span class="glyphicon glyphicon-remove-sign"></span> Sair</a></li>
     </ul>
 }

@@ -19,9 +19,11 @@ namespace ProjetoSaude.Controllers
     {
 
         private readonly AppManager _appManager;
+        private readonly IDatabaseContext _context;
 
-        public AccountController(AppManager appManager)
+        public AccountController(IDatabaseContext context, AppManager appManager)
         {
+            this._context = context;
             this._appManager = appManager;
         }
 
@@ -36,7 +38,7 @@ namespace ProjetoSaude.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> InputLogin(IUser model, string ReturnUrl)
         {
-            IUser result = this._appManager.getDatabase().Users.SingleOrDefault(u => u.Cpf == model.Cpf && u.Senha == new Cripto(model.Senha).Encrypted);
+            IUser result = this._context.Users.SingleOrDefault(u => u.Cpf == model.Cpf && u.Senha == new Cripto(model.Senha).Encrypted);
 
             if (result == null)
             {
@@ -73,8 +75,8 @@ namespace ProjetoSaude.Controllers
             model.Perfil = "NORMAL";
             model.Senha = new Cripto(model.Senha).Encrypted;
 
-            this._appManager.getDatabase().Users.Add(model);
-            await this._appManager.getDatabase().SaveChangesAsync();
+            this._context.Users.Add(model);
+            await this._context.SaveChangesAsync();
 
             this._appManager.addAlert("info", "Sua conta foi criada com sucesso. Obrigado :)", this.HttpContext);
 
@@ -85,11 +87,11 @@ namespace ProjetoSaude.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> InputRecover(FUserRecover user)
         {
-            IUser result = this._appManager.getDatabase().Users.SingleOrDefault(u => u.Cpf == user.Cpf && u.Email == user.Email);
+            IUser result = this._context.Users.SingleOrDefault(u => u.Cpf == user.Cpf && u.Email == user.Email);
             if (result != null)
             {
                 this._appManager.addAlert("success", "Enviamos um e-mail para " + result.Email + " com instruções para recuperar a senha.", this.HttpContext);
-                await this._appManager.sendRecoveryEmail(result);
+                await this._appManager.sendRecoveryEmail(result, this._context);
             } else
             {
                 this._appManager.addAlert("danger", "Não existe nenhuma conta com esse CPF e E-mail.", this.HttpContext);
@@ -114,7 +116,7 @@ namespace ProjetoSaude.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> InputValidate(FValidateToken validateToken)
         {
-            IUser user = this._appManager.getDatabase().Users.SingleOrDefault(u => u.Cpf == validateToken.Cpf);
+            IUser user = this._context.Users.SingleOrDefault(u => u.Cpf == validateToken.Cpf);
 
             if (user == null)
             {
@@ -122,7 +124,7 @@ namespace ProjetoSaude.Controllers
                 return RedirectToAction("Validate", "Account");
             }
 
-            IUserRecover recover = this._appManager.getDatabase().UsersRecover.SingleOrDefault(r => r.Token == validateToken.Token && r.UserId == user.Id);
+            IUserRecover recover = this._context.UsersRecover.SingleOrDefault(r => r.Token == validateToken.Token && r.UserId == user.Id);
 
             if (recover == null)
             {
@@ -145,16 +147,16 @@ namespace ProjetoSaude.Controllers
             user.Senha = new Cripto(validateToken.NovaSenha).Encrypted;
             recover.Validated = true;
 
-            this._appManager.getDatabase().UsersRecover.Update(recover);
-            this._appManager.getDatabase().Users.Update(user);
-            await this._appManager.getDatabase().SaveChangesAsync();
+            this._context.UsersRecover.Update(recover);
+            this._context.Users.Update(user);
+            await this._context.SaveChangesAsync();
 
             return RedirectToAction("Login", "Account");
         }
 
         public IActionResult Edit(int id)
         {
-            return View(this._appManager.getDatabase().Users.Find(id));
+            return View(this._context.Users.Find(id));
         }
 
     }
