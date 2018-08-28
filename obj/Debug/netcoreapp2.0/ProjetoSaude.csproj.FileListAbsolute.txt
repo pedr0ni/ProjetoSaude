@@ -9,3 +9,14 @@ C:\Users\PEDRONI\Documents\PUCC\Projeto B\ProjetoSaude\ProjetoSaude\obj\Debug\ne
 C:\Users\PEDRONI\Documents\PUCC\Projeto B\ProjetoSaude\ProjetoSaude\obj\Debug\netcoreapp2.0\ProjetoSaude.AssemblyInfo.cs
 C:\Users\PEDRONI\Documents\PUCC\Projeto B\ProjetoSaude\ProjetoSaude\obj\Debug\netcoreapp2.0\ProjetoSaude.dll
 C:\Users\PEDRONI\Documents\PUCC\Projeto B\ProjetoSaude\ProjetoSaude\obj\Debug\netcoreapp2.0\ProjetoSaude.pdb
+C:\Users\18079020\Desktop\ProjetoSaude-master\bin\Debug\netcoreapp2.0\ProjetoSaude.deps.json
+C:\Users\18079020\Desktop\ProjetoSaude-master\bin\Debug\netcoreapp2.0\ProjetoSaude.runtimeconfig.json
+C:\Users\18079020\Desktop\ProjetoSaude-master\bin\Debug\netcoreapp2.0\ProjetoSaude.runtimeconfig.dev.json
+C:\Users\18079020\Desktop\ProjetoSaude-master\bin\Debug\netcoreapp2.0\ProjetoSaude.dll
+C:\Users\18079020\Desktop\ProjetoSaude-master\bin\Debug\netcoreapp2.0\ProjetoSaude.pdb
+C:\Users\18079020\Desktop\ProjetoSaude-master\obj\Debug\netcoreapp2.0\ProjetoSaude.csprojResolveAssemblyReference.cache
+C:\Users\18079020\Desktop\ProjetoSaude-master\obj\Debug\netcoreapp2.0\ProjetoSaude.csproj.CoreCompileInputs.cache
+C:\Users\18079020\Desktop\ProjetoSaude-master\obj\Debug\netcoreapp2.0\ProjetoSaude.AssemblyInfoInputs.cache
+C:\Users\18079020\Desktop\ProjetoSaude-master\obj\Debug\netcoreapp2.0\ProjetoSaude.AssemblyInfo.cs
+C:\Users\18079020\Desktop\ProjetoSaude-master\obj\Debug\netcoreapp2.0\ProjetoSaude.dll
+C:\Users\18079020\Desktop\ProjetoSaude-master\obj\Debug\netcoreapp2.0\ProjetoSaude.pdb

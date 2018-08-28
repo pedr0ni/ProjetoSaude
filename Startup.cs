@@ -31,7 +31,8 @@ namespace ProjetoSaude
 
             services.AddDbContext<IDatabaseContext>(options =>
             {
-                options.UseMySql(Configuration["ConnectionString"]);
+                // options.UseMySql(Configuration["ConnectionString"]);
+                options.UseInMemoryDatabase("SaudeDb");
             });
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,

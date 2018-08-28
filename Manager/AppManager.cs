@@ -30,11 +30,10 @@ namespace ProjetoSaude.Manager
             this.smtpClient.Credentials = new NetworkCredential("matheus.pedroni2@gmail.com", "Mi48Zz1kx7");
         }
 
-        public async void signIn(HttpContext http, IUser model, bool isPersistent)
+        public async Task signIn(HttpContext http, IUser model, bool isPersistent)
         {
             ClaimsIdentity identity = new ClaimsIdentity(this.GetUserClaims(model), CookieAuthenticationDefaults.AuthenticationScheme);
             ClaimsPrincipal principal = new ClaimsPrincipal(identity);
-          
             await http.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
         }
 
@@ -112,6 +111,12 @@ namespace ProjetoSaude.Manager
                 result += keys[rnd.Next(keys.Length)];
             }
             return result.ToUpper();
+        }
+
+        public void addAlert(string Type, string Message, HttpContext http)
+        {
+            http.Response.Cookies.Append("Type", Type);
+            http.Response.Cookies.Append("Message", Message);
         }
 
         /// <summary>

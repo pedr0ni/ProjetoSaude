@@ -28,13 +28,6 @@ namespace ProjetoSaude.Controllers
         [AllowAnonymous]
         public IActionResult Login()
         {
-            if (Request.Cookies["Type"] != null && Request.Cookies["Message"] != null)
-            {
-                ViewData["Type"] = Request.Cookies["Type"];
-                ViewData["Message"] = Request.Cookies["Message"];
-                Response.Cookies.Delete("Type");
-                Response.Cookies.Delete("Message");
-            }
             return View();
         }
 
@@ -47,12 +40,11 @@ namespace ProjetoSaude.Controllers
 
             if (result == null)
             {
-                Response.Cookies.Append("Type", "danger");
-                Response.Cookies.Append("Message", "Usuário ou senha incorreto(s).");
+                this._appManager.addAlert("danger", "Usuário ou senha incorreto(s).", this.HttpContext);
                 return RedirectToAction("Login", "Account");
             }
 
-            this._appManager.signIn(this.HttpContext, result, false);
+            await this._appManager.signIn(this.HttpContext, result, false);
             if (ReturnUrl != null) return Redirect(ReturnUrl);
 
             return RedirectToAction("Index", "Home");
@@ -61,21 +53,12 @@ namespace ProjetoSaude.Controllers
         [AllowAnonymous]
         public IActionResult Registrar()
         {
-            Console.WriteLine("=== " + this._appManager.getDatabase().Users.ToList().Count);
-            if (Request.Cookies["Type"] != null && Request.Cookies["Message"] != null)
-            {
-                ViewData["Type"] = Request.Cookies["Type"];
-                ViewData["Message"] = Request.Cookies["Message"];
-                Response.Cookies.Delete("Type");
-                Response.Cookies.Delete("Message");
-            }
             return View();
         }
 
         public IActionResult Logout()
         {
-            Response.Cookies.Append("Type", "warning");
-            Response.Cookies.Append("Message", "Você saiu da aplicação.");
+            this._appManager.addAlert("info", "Você saiu da aplicação.", this.HttpContext);
             this._appManager.signOut(this.HttpContext);
             return new RedirectToActionResult("Login", "Account", new { });
         }
@@ -91,7 +74,9 @@ namespace ProjetoSaude.Controllers
             model.Senha = new Cripto(model.Senha).Encrypted;
 
             this._appManager.getDatabase().Users.Add(model);
-            this._appManager.getDatabase().SaveChanges();
+            await this._appManager.getDatabase().SaveChangesAsync();
+
+            this._appManager.addAlert("info", "Sua conta foi criada com sucesso. Obrigado :)", this.HttpContext);
 
             return RedirectToAction("Login", "Account");
         }
@@ -103,13 +88,11 @@ namespace ProjetoSaude.Controllers
             IUser result = this._appManager.getDatabase().Users.SingleOrDefault(u => u.Cpf == user.Cpf && u.Email == user.Email);
             if (result != null)
             {
-                Response.Cookies.Append("Type", "success");
-                Response.Cookies.Append("Message", "Enviamos um e-mail para " + result.Email + " com instruções para recuperar a senha.");
+                this._appManager.addAlert("success", "Enviamos um e-mail para " + result.Email + " com instruções para recuperar a senha.", this.HttpContext);
                 await this._appManager.sendRecoveryEmail(result);
             } else
             {
-                Response.Cookies.Append("Type", "danger");
-                Response.Cookies.Append("Message", "Não existe nenhuma conta com esse CPF e E-mail.");
+                this._appManager.addAlert("danger", "Não existe nenhuma conta com esse CPF e E-mail.", this.HttpContext);
             }
             return RedirectToAction("Recover", "Account");
         }
@@ -117,13 +100,6 @@ namespace ProjetoSaude.Controllers
         [AllowAnonymous]
         public IActionResult Recover()
         {
-            if (Request.Cookies["Type"] != null && Request.Cookies["Message"] != null)
-            {
-                ViewData["Type"] = Request.Cookies["Type"];
-                ViewData["Message"] = Request.Cookies["Message"];
-                Response.Cookies.Delete("Type");
-                Response.Cookies.Delete("Message");
-            }
             return View();
         }
 
@@ -142,8 +118,7 @@ namespace ProjetoSaude.Controllers
 
             if (user == null)
             {
-                Response.Cookies.Append("Type", "danger");
-                Response.Cookies.Append("Message", "O CPF inserido não existe.");
+                this._appManager.addAlert("danger", "O CPF inserido não existe.", this.HttpContext);
                 return RedirectToAction("Validate", "Account");
             }
 
@@ -151,22 +126,19 @@ namespace ProjetoSaude.Controllers
 
             if (recover == null)
             {
-                Response.Cookies.Append("Type", "danger");
-                Response.Cookies.Append("Message", "O Token inserido está incorreto.");
+                this._appManager.addAlert("danger", "O Token inserido está incorreto.", this.HttpContext);
                 return RedirectToAction("Recover", "Account");
             }
 
             if (recover.Validated)
             {
-                Response.Cookies.Append("Type", "warning");
-                Response.Cookies.Append("Message", "O Token inserido já foi validado.");
+                this._appManager.addAlert("warning", "O Token inserido já foi validado.", this.HttpContext);
                 return RedirectToAction("Recover", "Account");
             }
 
             if (new Cripto(validateToken.NovaSenha).Encrypted == user.Senha)
             {
-                Response.Cookies.Append("Type", "danger");
-                Response.Cookies.Append("Message", "Você não pode utilizar uma senha igual a antiga.");
+                this._appManager.addAlert("danger", "Você não pode utilizar uma senha igual a antiga.", this.HttpContext);
                 return RedirectToAction("Validate", "Account");
             }
 
@@ -178,6 +150,11 @@ namespace ProjetoSaude.Controllers
             await this._appManager.getDatabase().SaveChangesAsync();
 
             return RedirectToAction("Login", "Account");
+        }
+
+        public IActionResult Edit(int id)
+        {
+            return View(this._appManager.getDatabase().Users.Find(id));
         }
 
     }

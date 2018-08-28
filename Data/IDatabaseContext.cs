@@ -10,7 +10,7 @@ namespace ProjetoSaude.Data
 {
     public class IDatabaseContext : DbContext
     {
-        public IDatabaseContext(DbContextOptions<IDatabaseContext> options) : base(options) {}
+        public IDatabaseContext(DbContextOptions<IDatabaseContext> options) : base(options) { }
 
         public DbSet<IUser> Users { get; set; }
         public DbSet<IUserRecover> UsersRecover { get; set; }

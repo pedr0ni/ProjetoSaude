@@ -6,12 +6,7 @@
 
 <hr />
 
-@if (ViewData["Message"] != null && ViewData["Type"] != null)
-{
-    <div class="alert alert-@ViewData["type"]">
-        @ViewData["message"]
-    </div>
-}
+@Html.Partial("Alert")
 
 <form asp-controller="Account" asp-action="InputRegistrar" method="post">
     <div class="form-group">
@@ -38,6 +33,7 @@
     @Html.AntiForgeryToken()
 
     <button type="submit" class="btn btn-primary">REGISTRAR</button>
+    <button type="reset" class="btn btn-danger">LIMPAR</button>
     <a asp-area="" asp-controller="Account" asp-action="Login" class="pull-right">Já possui uma conta? Entrar</a>
 </form>
 

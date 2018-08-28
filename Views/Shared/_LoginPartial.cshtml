@@ -1,13 +1,12 @@
 ﻿@using ProjetoSaude.Manager
-
 @inject AppManager appManager
-
 @if (appManager.isLogged(Context))
 {
-<ul class="nav navbar-nav navbar-right">
-    <li><a asp-area="" asp-controller="Account" asp-action="Perfil"><span class="glyphicon glyphicon-user"></span> @appManager.getLoggedUser(Context).Nome</a></li>
-    <li><a asp-area="" asp-controller="Account" asp-action="Logout"><span class="glyphicon glyphicon-remove-sign"></span> Sair</a></li>
-</ul>
+    IUser logged = appManager.getLoggedUser(Context);
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="#" data-toggle="modal" data-target="modalEdit"><span class="glyphicon glyphicon-user"></span> @logged.Nome</a></li>
+        <li><a asp-area="" asp-controller="Account" asp-action="Logout"><span class="glyphicon glyphicon-remove-sign"></span> Sair</a></li>
+    </ul>
 }
 else
 {
@@ -16,4 +15,3 @@ else
         <li><a asp-area="" asp-controller="Account" asp-action="Login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
     </ul>
 }
-

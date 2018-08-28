@@ -7,12 +7,7 @@
 
 <hr />
 
-@if (ViewData["Message"] != null && ViewData["Type"] != null)
-{
-    <div class="alert alert-@ViewData["Type"]">
-        @ViewData["Message"]
-    </div>
-}
+@Html.Partial("Alert")
 
 <form asp-controller="Account" asp-action="InputRecover" method="post">
     <div class="form-group">
