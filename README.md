@@ -1,7 +1,7 @@
 # ProjetoSaude
 Projeto Saúde ~ Projeto Integrado B PUCC
 
-## Build 
+## Entrega Contínua (Travis-Ci) 
 
 [![Build Status](https://travis-ci.com/pedr0ni/ProjetoSaude.svg?token=EKgPpXgyA2FH2pmLC6vv&branch=master)](https://travis-ci.com/pedr0ni/ProjetoSaude)
 
