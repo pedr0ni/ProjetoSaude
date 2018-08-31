@@ -83,6 +83,7 @@ namespace ProjetoSaude.Controllers
             return RedirectToAction("Login", "Account");
         }
 
+        [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> InputRecover(FUserRecover user)
@@ -144,11 +145,18 @@ namespace ProjetoSaude.Controllers
                 return RedirectToAction("Validate", "Account");
             }
 
+            if (this._appManager.Timestamp - recover.Created > 86400) // 86400 = 1 dia
+            {
+                this._appManager.addAlert("danger", "Este Token já expirou faz mais de 1 dia. Envie um e-mail novamente para recupearar sua senha.", this.HttpContext);
+                return RedirectToAction("Validate", "Account");
+            }
+
             user.Senha = new Cripto(validateToken.NovaSenha).Encrypted;
             recover.Validated = true;
 
             this._context.UsersRecover.Update(recover);
             this._context.Users.Update(user);
+            this._appManager.addAlert("success", "Sua senha foi alterada com sucesso. ", this.HttpContext);
             await this._context.SaveChangesAsync();
 
             return RedirectToAction("Login", "Account");

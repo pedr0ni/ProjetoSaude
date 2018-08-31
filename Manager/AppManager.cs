@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -106,18 +107,26 @@ namespace ProjetoSaude.Manager
             context.UsersRecover.Add(recover);
             await context.SaveChangesAsync();
 
-            MailMessage message = new MailMessage();
-            message.From = new MailAddress("pedroni.dev@gmail.com");
-            message.To.Add(user.Email);
-            message.IsBodyHtml = true;
-            message.Body = this.getEmailBody().Replace("%nome%", user.Nome).Replace("%token%", recover.Token);
-            message.Subject = "Recuperação de Conta - Projeto Saúde";
-            await this.smtpClient.SendMailAsync(message);
+            new Thread(async () =>
+            {
+                MailMessage message = new MailMessage();
+                message.From = new MailAddress("accounts@projetosaude.com.br");
+                message.To.Add(user.Email);
+                message.IsBodyHtml = true;
+                message.Body = this.getEmailBody().Replace("%nome%", user.Nome).Replace("%token%", recover.Token);
+                message.Subject = "Recuperação de Conta - Projeto Saúde";
+                await this.smtpClient.SendMailAsync(message);
+            }).Start();
+            
         }
 
+        /// <summary>
+        /// Lê o HTML do corpo do e-mail
+        /// </summary>
+        /// <returns>string com o corpo do email</returns>
         private string getEmailBody()
         {
-            System.IO.StreamReader sr = new System.IO.StreamReader($"{Directory.GetCurrentDirectory()}{@"\wwwroot\Email.html"}");
+            System.IO.StreamReader sr = new System.IO.StreamReader($"{Directory.GetCurrentDirectory()}{@"/wwwroot/Email.html"}");
             string result = sr.ReadToEnd();
             sr.Close();
             return result;
