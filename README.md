@@ -18,7 +18,7 @@ Toda documentação está feita inline no código fonte.
 
 ## Cronograma
 
---
+[Veja o arquivo Cronograma.md](https://github.com/pedr0ni/ProjetoSaude/blob/master/Cronograma.md)
 
 ## Anotações
 
