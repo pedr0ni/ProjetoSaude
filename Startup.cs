@@ -41,22 +41,22 @@ namespace ProjetoSaude
              * Use para Banco de Dados MySql.
              * Connection String definida no appsettings.json
              */
-            //services.AddDbContext<IDatabaseContext>(options =>
-            //{
-            //    options.UseMySql(Configuration["ConnectionString"]);
-            //});
+            services.AddDbContext<IDatabaseContext>(options =>
+            {
+                options.UseMySql(Configuration["ConnectionString"]);
+            });
 
 
             /*
              * Adiciona o serviço de autenticação por Cookie
-             */
+             *
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
             options =>
             {
                     options.LoginPath = "/Account/Login";
                     options.LogoutPath = "/Account/Logout";
 
-            });
+            }); */
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
