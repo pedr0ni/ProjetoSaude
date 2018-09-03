@@ -13694,23 +13694,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\PEDRONI\\.nuget\\packages\\": {},
+    "C:\\Users\\resource\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\PEDRONI\\Documents\\PUCC\\Projeto B\\ProjetoSaude\\ProjetoSaude\\ProjetoSaude.csproj",
+      "projectUniqueName": "C:\\Users\\resource\\Source\\Repos\\ProjetoSaude\\ProjetoSaude.csproj",
       "projectName": "ProjetoSaude",
-      "projectPath": "C:\\Users\\PEDRONI\\Documents\\PUCC\\Projeto B\\ProjetoSaude\\ProjetoSaude\\ProjetoSaude.csproj",
-      "packagesPath": "C:\\Users\\PEDRONI\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\PEDRONI\\Documents\\PUCC\\Projeto B\\ProjetoSaude\\ProjetoSaude\\obj\\",
+      "projectPath": "C:\\Users\\resource\\Source\\Repos\\ProjetoSaude\\ProjetoSaude.csproj",
+      "packagesPath": "C:\\Users\\resource\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\resource\\Source\\Repos\\ProjetoSaude\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\PEDRONI\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\resource\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
