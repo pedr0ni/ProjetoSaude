@@ -1,5 +1,5 @@
 # ProjetoSaude
-Projeto Saúde ~ Projeto Integrado B PUCC
+Projeto Saúde ~ Projeto Integrado B PUCc
 
 ## Entrega Contínua (Travis-Ci) 
 
