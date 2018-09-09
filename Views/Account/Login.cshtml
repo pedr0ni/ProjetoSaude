@@ -1,25 +1,122 @@
 ﻿@{
-    ViewData["Title"] = "Login";
+    Layout = null;
 }
 
-<h2>Login</h2>
-
-<hr />
-
-@Html.Partial("Alert")
-
-<form asp-controller="Account" asp-action="InputLogin" method="post">
-    <div class="form-group">
-        <label>CPF</label>
-        <input id="cpf" name="cpf" type="text" class="form-control" placeholder="Ex. 12345678912" required>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login - Life Link</title>
+    <!-- Vendor CSS -->
+    <link href="~/lib/animate.css/animate.min.css" rel="stylesheet">
+    <link href="~/lib/material-design-iconic-font/dist/css/material-design-iconic-font.min.css" rel="stylesheet">
+    <!-- CSS -->
+    <link href="~/css/app_1.min.css" rel="stylesheet">
+    <link href="~/css/app_2.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="login-content">
+        <!-- Login -->
+        <div class="lc-block toggled" id="l-login">
+            @Html.Partial("Alert")
+            <form asp-controller="Account" asp-action="LoginPost" method="post">
+                <input name="ReturnUrl" value="@Context.Request.Query["ReturnUrl"]" hidden />
+                <div class="lcb-form">
+                    <div class="input-group m-b-20">
+                        <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
+                        <div class="fg-line">
+                            <input type="text" class="form-control" name="Cpf" placeholder="Digite seu CPF..." required>
+                        </div>
+                    </div>
+                    <div class="input-group m-b-20">
+                        <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
+                        <div class="fg-line">
+                            <input type="password" class="form-control" name="Senha" placeholder="Digite sua Senha..." required>
+                        </div>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="">
+                            <i class="input-helper"></i>
+                            Mantenha-me logado
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-login btn-success btn-float"><i class="zmdi zmdi-arrow-forward"></i></button>
+                </div>
+                <div class="lcb-navigation">
+                    <a href="" data-ma-action="login-switch" data-ma-block="#l-register"><i class="zmdi zmdi-plus"></i> <span>Registrar</span></a>
+                    <a href="" data-ma-action="login-switch" data-ma-block="#l-forget-password"><i>?</i> <span>Recuperar Senha</span></a>
+                </div>
+            </form>
+        </div>
+        <!-- Register -->
+        <div class="lc-block" id="l-register">
+            <form asp-controller="Account" asp-action="RegistrarPost" method="post">
+                <div class="lcb-form">
+                    <div class="input-group m-b-20">
+                        <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
+                        <div class="fg-line">
+                            <input type="text" class="form-control" placeholder="CPF > Ex. 12345678912" name="Cpf" required>
+                        </div>
+                    </div>
+                    <div class="input-group m-b-20">
+                        <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
+                        <div class="fg-line">
+                            <input type="text" class="form-control" placeholder="Nome Completo > Ex. Matheus Pedroni" name="Nome" required>
+                        </div>
+                    </div>
+                    <div class="input-group m-b-20">
+                        <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
+                        <div class="fg-line">
+                            <input type="text" class="form-control" placeholder="RG > Ex. 12345678X" name="Rg" required>
+                        </div>
+                    </div>
+                    <div class="input-group m-b-20">
+                        <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
+                        <div class="fg-line">
+                            <input type="password" class="form-control" placeholder="Senha" name="Senha" required>
+                        </div>
+                    </div>
+                    <div class="input-group m-b-20">
+                        <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
+                        <div class="fg-line">
+                            <input type="email" class="form-control" placeholder="E-mail > Ex. nome@@dominio.com.br" name="Email" required>
+                        </div>
+                    </div>
+                    <button type="submit" href="" class="btn btn-login btn-success btn-float"><i class="zmdi zmdi-check"></i></button>
+                </div>
+                <div class="lcb-navigation">
+                    <a href="" data-ma-action="login-switch" data-ma-block="#l-login"><i class="zmdi zmdi-long-arrow-right"></i> <span>Login</span></a>
+                    <a href="" data-ma-action="login-switch" data-ma-block="#l-forget-password"><i>?</i> <span>Recuperar Senha</span></a>
+                </div>
+            </form>
+        </div>
+        <!-- Forgot Password -->
+        <div class="lc-block" id="l-forget-password">
+            <div class="lcb-form">
+                <p class="text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu risus. Curabitur commodo lorem fringilla enim feugiat commodo sed ac lacus.</p>
+                <div class="input-group m-b-20">
+                    <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
+                    <div class="fg-line">
+                        <input type="text" class="form-control" placeholder="Email Address">
+                    </div>
+                </div>
+                <a href="" class="btn btn-login btn-success btn-float"><i class="zmdi zmdi-check"></i></a>
+            </div>
+            <div class="lcb-navigation">
+                <a href="" data-ma-action="login-switch" data-ma-block="#l-login"><i class="zmdi zmdi-long-arrow-right"></i> <span>Sign in</span></a>
+                <a href="" data-ma-action="login-switch" data-ma-block="#l-register"><i class="zmdi zmdi-plus"></i> <span>Register</span></a>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label>Senha</label>
-        <input id="senha" name="senha" type="password" class="form-control" placeholder="Digite sua senha" required>
-    </div>
-    <input name="ReturnUrl" value="@Context.Request.Query["ReturnUrl"]" hidden />
-    @Html.AntiForgeryToken()
-    <button type="submit" class="btn btn-primary">ENTRAR</button>
-    <button type="reset" class="btn btn-danger">LIMPAR</button>
-    <a asp-area="" asp-controller="Account" asp-action="Recover" class="pull-right">Esqueci minha senha</a>
-</form>
+
+    <!-- Javascript Libraries -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/lib/Waves/dist/waves.min.js"></script>
+    <script src="~/js/app.min.js"></script>
+</body>
+</html>
+

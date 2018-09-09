@@ -1,0 +1,2 @@
+﻿#!/bin/bash
+git pull origin master  && dotnet build && dotnet publish --runtime debian.8-x64 && cd /root/ProjetoSaude/bin/Debug/netcoreapp2.0/debian.8-x64/publish/ && chmod 777 ./ProjetoSaude && ./ProjetoSaude

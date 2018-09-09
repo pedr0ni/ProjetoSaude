@@ -36,7 +36,7 @@ namespace ProjetoSaude.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public async Task<IActionResult> InputLogin(IUser model, string ReturnUrl)
+        public async Task<IActionResult> LoginPost(IUser model, string ReturnUrl)
         {
             IUser result = this._context.Users.SingleOrDefault(u => u.Cpf == model.Cpf && u.Senha == new Cripto(model.Senha).Encrypted);
 
@@ -47,7 +47,7 @@ namespace ProjetoSaude.Controllers
             }
 
             await this._appManager.signIn(this.HttpContext, result, false);
-            if (ReturnUrl != null) return Redirect(ReturnUrl);
+            if (ReturnUrl != null) return LocalRedirect(ReturnUrl);
 
             return RedirectToAction("Index", "Home");
         }
@@ -68,7 +68,7 @@ namespace ProjetoSaude.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public async Task<IActionResult> InputRegistrar(IUser model)
+        public async Task<IActionResult> RegistrarPost(IUser model)
         {
 
             model.Status = true;
