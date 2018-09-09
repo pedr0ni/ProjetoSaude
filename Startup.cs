@@ -49,14 +49,14 @@ namespace ProjetoSaude
 
             /*
              * Adiciona o serviço de autenticação por Cookie
-             *
+             */
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
             options =>
             {
                     options.LoginPath = "/Account/Login";
                     options.LogoutPath = "/Account/Logout";
 
-            }); */
+            });
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -65,7 +65,7 @@ namespace ProjetoSaude
             services.AddMvc();
                 
             /*
-             * Adiciona um "service"custom que é instanciado no construtor de cada Controller
+             * Adiciona um "service" custom que é instanciado no construtor de cada Controller
              */
             services.AddTransient(m => new AppManager());
         }
