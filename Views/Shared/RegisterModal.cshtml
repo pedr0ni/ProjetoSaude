@@ -1,0 +1,42 @@
+﻿<div id="modal-register" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Registrar</h2>
+
+        <form id="register-form">
+            <div class="uk-margin">
+                <div class="uk-form-controls">
+                    <input class="uk-input" type="text" placeholder="CPF" name="Cpf">
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <div class="uk-form-controls">
+                    <input class="uk-input" type="text" placeholder="Nome Completo" name="Nome">
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <div class="uk-form-controls">
+                    <input class="uk-input" type="text" placeholder="RG" name="Rg">
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <div class="uk-form-controls">
+                    <input class="uk-input" type="email" placeholder="E-mail" name="Email">
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <div class="uk-form-controls">
+                    <input class="uk-input" type="password" placeholder="Senha" name="Senha">
+                </div>
+            </div>
+        </form>
+
+        <p class="uk-text-right">
+            <button class="uk-button uk-button-default" type="button" onclick="$('#register-form')[0].reset()">LIMPAR</button>
+            <button class="uk-button uk-button-primary" type="button" onclick="$('#register-form').submit()">REGISTRAR</button>
+        </p>
+    </div>
+</div>

@@ -36,20 +36,16 @@ namespace ProjetoSaude.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public async Task<IActionResult> LoginPost(IUser model, string ReturnUrl)
+        public async Task<IActionResult> LoginPost(IUser model)
         {
             IUser result = this._context.Users.SingleOrDefault(u => u.Cpf == model.Cpf && u.Senha == new Cripto(model.Senha).Encrypted);
 
-            if (result == null)
+            if (result != null)
             {
-                this._appManager.addAlert("danger", "Usuário ou senha incorreto(s).", this.HttpContext);
-                return RedirectToAction("Login", "Account");
+                await this._appManager.signIn(this.HttpContext, result, false);
             }
 
-            await this._appManager.signIn(this.HttpContext, result, false);
-            if (ReturnUrl != null) return LocalRedirect(ReturnUrl);
-
-            return RedirectToAction("Index", "Home");
+            return Ok(new { Authenticated = result != null, Message = result != null ? "Usuário logado com sucesso." : "Usuário ou senha incorreto(s)." });
         }
 
         [AllowAnonymous]

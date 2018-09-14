@@ -28,14 +28,11 @@ namespace ProjetoSaude
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-
             /*Use para Banco de Dados InMemory */
             services.AddEntityFrameworkInMemoryDatabase().AddDbContext<IDatabaseContext>(options =>
             {
                 options.UseInMemoryDatabase("SaudeDb");
             });
-
 
             /*
              * Use para Banco de Dados MySql.
@@ -60,6 +57,14 @@ namespace ProjetoSaude
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            });
+
+            /*
+             * Seta todas URLs para LowerCase
+             */
+            services.AddRouting(options =>
+            {
+                options.LowercaseUrls = true;
             });
 
             services.AddMvc();
