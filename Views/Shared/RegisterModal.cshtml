@@ -5,38 +5,38 @@
         <form id="register-form">
             <div class="uk-margin">
                 <div class="uk-form-controls">
-                    <input class="uk-input" type="text" placeholder="CPF" name="Cpf">
+                    <input class="uk-input" type="text" placeholder="CPF" id="register-cpf">
                 </div>
             </div>
 
             <div class="uk-margin">
                 <div class="uk-form-controls">
-                    <input class="uk-input" type="text" placeholder="Nome Completo" name="Nome">
+                    <input class="uk-input" type="text" placeholder="Nome Completo" id="register-nome">
                 </div>
             </div>
 
             <div class="uk-margin">
                 <div class="uk-form-controls">
-                    <input class="uk-input" type="text" placeholder="RG" name="Rg">
+                    <input class="uk-input" type="text" placeholder="RG" id="register-rg">
                 </div>
             </div>
 
             <div class="uk-margin">
                 <div class="uk-form-controls">
-                    <input class="uk-input" type="email" placeholder="E-mail" name="Email">
+                    <input class="uk-input" type="email" placeholder="E-mail" id="register-email">
                 </div>
             </div>
 
             <div class="uk-margin">
                 <div class="uk-form-controls">
-                    <input class="uk-input" type="password" placeholder="Senha" name="Senha">
+                    <input class="uk-input" type="password" id="register-password" placeholder="Senha">
                 </div>
             </div>
         </form>
 
         <p class="uk-text-right">
             <button class="uk-button uk-button-default" type="button" onclick="$('#register-form')[0].reset()">LIMPAR</button>
-            <button class="uk-button uk-button-primary" type="button" onclick="$('#register-form').submit()">REGISTRAR</button>
+            <button class="uk-button uk-button-primary" id="register-submit" type="button" onclick="$('#register-form').submit()">REGISTRAR</button>
         </p>
     </div>
 </div>

@@ -1,0 +1,52 @@
+﻿@using ProjetoSaude.Manager
+@using ProjetoSaude.Data
+
+@inject IDatabaseContext Database
+@inject AppManager Manager
+
+@{ 
+    IUser Logged = Manager.getLoggedUser(Context, Database);
+}
+
+<div id="modal-account" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Minha Conta</h2>
+
+        <form id="conta-form">
+            <div class="uk-margin">
+                <div class="uk-form-controls">
+                    <input class="uk-input" type="text" placeholder="CPF" id="conta-cpf" value="@Logged.Cpf">
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <div class="uk-form-controls">
+                    <input class="uk-input" type="text" placeholder="Nome Completo" id="conta-nome" value="@Logged.Nome">
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <div class="uk-form-controls">
+                    <input class="uk-input" type="text" placeholder="RG" id="conta-rg" value="@Logged.Rg">
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <div class="uk-form-controls">
+                    <input class="uk-input" type="email" placeholder="E-mail" id="conta-email" value="@Logged.Email">
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <div class="uk-form-controls">
+                    <input class="uk-input" type="password" id="conta-password" placeholder="Senha">
+                </div>
+            </div>
+        </form>
+
+        <p class="uk-text-right">
+            <button class="uk-button uk-button-default" type="button" onclick="$('#conta-form')[0].reset()">LIMPAR</button>
+            <button class="uk-button uk-button-primary" id="conta-submit" type="button" onclick="$('#conta-form').submit()">SALVAR</button>
+        </p>
+    </div>
+</div>

@@ -41,10 +41,20 @@
                                 </ul>
                             </div>
                             <div class="uk-navbar-right">
-                                <ul class="uk-navbar-nav">
-                                    <li id="page-login"><a href="#modal-login" uk-toggle>Login</a></li>
-                                    <li id="page-registrar"><a href="#modal-register" uk-toggle>Registrar</a></li>
-                                </ul>
+                                @if (!Context.User.Identity.IsAuthenticated)
+                                {
+                                    <ul class="uk-navbar-nav">
+                                        <li><a href="#modal-login" uk-toggle>Login</a></li>
+                                        <li><a href="#modal-register" uk-toggle>Registrar</a></li>
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <ul class="uk-navbar-nav">
+                                        <li class="uk-active"><a href="#modal-account" uk-toggle>@Context.User.Identity.Name</a></li>
+                                    </ul>
+
+                                }
                                 <div class="uk-navbar-item uk-visible@@m"><a href="#" uk-toggle="target: #offcanvas-usage" class="uk-button uk-button-default tm-button-default uk-icon">Sobre <polyline fill="none" stroke="#000" points="14,10 9.5,14.5 5,10"></polyline> <rect x="3" y="17" width="13" height="1"></rect> <line fill="none" stroke="#000" x1="9.5" y1="13.91" x2="9.5" y2="3"></line></svg></a></div>
                             </div>
                         </div>
@@ -73,6 +83,8 @@
         @Html.Partial("LoginModal")
 
         @Html.Partial("RegisterModal")
+
+        @Html.Partial("AccountModal")
 
         <script src="~/libs/popper.min.js"></script>
         <script src="~/libs/jquery.min.js"></script>

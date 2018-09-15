@@ -64,9 +64,13 @@ namespace ProjetoSaude.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public async Task<IActionResult> RegistrarPost(IUser model)
+        public async Task<IActionResult> RegisterPost(IUser model)
         {
-
+            IUser Check = this._context.Users.FirstOrDefault(u => u.Cpf == model.Cpf || u.Email == model.Email);
+            if (Check != null)
+            {
+                return Ok(new { Success = false, Message = "Já existe um usuário com este CPF ou E-mail." });
+            }
             model.Status = true;
             model.Perfil = "NORMAL";
             model.Senha = new Cripto(model.Senha).Encrypted;
@@ -74,9 +78,7 @@ namespace ProjetoSaude.Controllers
             this._context.Users.Add(model);
             await this._context.SaveChangesAsync();
 
-            this._appManager.addAlert("info", "Sua conta foi criada com sucesso. Obrigado :)", this.HttpContext);
-
-            return RedirectToAction("Login", "Account");
+            return Ok(new { Success = true, Message = "Usuário " + model.Nome + " registrado com sucesso." });
         }
 
         [HttpPost]
