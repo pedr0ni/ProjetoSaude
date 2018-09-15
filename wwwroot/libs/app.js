@@ -1,5 +1,6 @@
 ﻿function addSpinner(element) {
-    element.append("<div uk-spinner class='uk-margin-small-left spinner-loading'></div>");
+    element.html(" ").append("<div uk-spinner class='spinner-loading'></div>");
+    
 }
 
 function removeSpinner(element) {
@@ -36,7 +37,6 @@ $('#login-form').on('submit', (event) => {
 
     if (!validateInputs([login_cpf, login_password])) return;
 
-    login_submit.html("ENTRANDO...");
     addSpinner(login_submit);
 
     resetInputs([login_cpf, login_password]);
@@ -84,7 +84,6 @@ $('#register-form').on('submit', (event) => {
 
     if (!validateInputs([reg_cpf, reg_nome, reg_rg, reg_email, reg_password])) return;
 
-    reg_submit.html("REGISTRANDO...");
     addSpinner(reg_submit);
 
     setTimeout(() => {

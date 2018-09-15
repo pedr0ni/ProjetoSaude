@@ -14,7 +14,5 @@ namespace ProjetoSaude.Controllers
         {
             return View();
         }
-
-
     }
 }

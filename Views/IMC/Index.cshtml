@@ -1,7 +1,68 @@
 ﻿@{
-    ViewData["Title"] = "Cálculo de IMC";
+    ViewData["Page"] = "imc";
 }
 
-<h2>Cálculo de IMC</h2>
+<h1 class="uk-h1">Cálculo de IMC</h1>
+<p class="uk-text-lead">Faça o cálculo do seu Indíce de Massa Corporal</p>
 
-<hr />
+<hr class="uk-divider-icon" />
+
+<form id="form-imc">
+    <div class="uk-margin">
+        <input class="uk-input" type="text" id="imc-peso" placeholder="Peso (Kilogramas) Ex: 75,8">
+    </div>
+    <div class="uk-margin">
+        <input class="uk-input" type="text" id="imc-altura" placeholder="Altura (Metros) Ex: 1,70 ">
+    </div>
+    <button class="uk-button uk-button-default" type="reset">LIMPAR</button>
+    <button class="uk-button uk-button-primary" type="submit">CALCULAR</button>
+</form>
+
+<hr class="uk-divider-icon" />
+
+<div id="resultados" style="visibility: hidden">
+    <h1 class="uk-g1">Resultados</h1>
+    <p class="uk-text-lead">Seu IMC é <strong id="resultado"></strong></p>
+</div>
+
+@section Scripts {
+    <script>
+        $('#imc-peso').on('input', (event) => {
+            if (isNaN(parseFloat($('#imc-peso').val()))) {
+                $('#imc-peso').addClass('uk-form-danger');
+            } else {
+                $('#imc-peso').removeClass('uk-form-danger');
+            }
+        });
+
+        $('#imc-alutra').on('input', (event) => {
+            if (isNaN(parseFloat($('#imc-altura').val()))) {
+                $('#imc-altura').addClass('uk-form-danger');
+            } else {
+                $('#imc-altura').removeClass('uk-form-danger');
+            }
+        });
+
+        $('#form-imc').on('submit', (event) => {
+            console.log('submited');
+            event.preventDefault();
+
+            let peso = parseFloat($('#imc-peso').val());
+            let altura = parseFloat($('#imc-altura').val());
+
+            $('#imc-peso').removeClass('uk-form-danger');
+            $('#imc-altura').removeClass('uk-form-danger');
+
+            let imc = peso / (altura * altura);
+
+            if (isNaN(imc)) {
+                $('#resultados').css('visibility', 'hidden');
+                return;
+            }
+            
+            $('#resultados').css('visibility', 'visible');
+            $('#resultado').html(imc.toFixed(2));
+           
+        });
+    </script>
+}

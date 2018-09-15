@@ -56,9 +56,8 @@ namespace ProjetoSaude.Controllers
 
         public IActionResult Logout()
         {
-            this._appManager.addAlert("info", "Você saiu da aplicação.", this.HttpContext);
             this._appManager.signOut(this.HttpContext);
-            return new RedirectToActionResult("Login", "Account", new { });
+            return new RedirectToActionResult("Index", "Home", new { });
         }
 
         [HttpPost]

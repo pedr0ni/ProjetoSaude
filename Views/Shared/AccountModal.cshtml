@@ -4,49 +4,49 @@
 @inject IDatabaseContext Database
 @inject AppManager Manager
 
-@{ 
+@if (Context.User.Identity.IsAuthenticated)
+{
     IUser Logged = Manager.getLoggedUser(Context, Database);
-}
+    <div id="modal-account" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body">
+            <h2 class="uk-modal-title">Minha Conta</h2>
 
-<div id="modal-account" uk-modal>
-    <div class="uk-modal-dialog uk-modal-body">
-        <h2 class="uk-modal-title">Minha Conta</h2>
-
-        <form id="conta-form">
-            <div class="uk-margin">
-                <div class="uk-form-controls">
-                    <input class="uk-input" type="text" placeholder="CPF" id="conta-cpf" value="@Logged.Cpf">
+            <form id="conta-form">
+                <div class="uk-margin">
+                    <div class="uk-form-controls">
+                        <input class="uk-input" type="text" placeholder="CPF" id="conta-cpf" value="@Logged.Cpf">
+                    </div>
                 </div>
-            </div>
 
-            <div class="uk-margin">
-                <div class="uk-form-controls">
-                    <input class="uk-input" type="text" placeholder="Nome Completo" id="conta-nome" value="@Logged.Nome">
+                <div class="uk-margin">
+                    <div class="uk-form-controls">
+                        <input class="uk-input" type="text" placeholder="Nome Completo" id="conta-nome" value="@Logged.Nome">
+                    </div>
                 </div>
-            </div>
 
-            <div class="uk-margin">
-                <div class="uk-form-controls">
-                    <input class="uk-input" type="text" placeholder="RG" id="conta-rg" value="@Logged.Rg">
+                <div class="uk-margin">
+                    <div class="uk-form-controls">
+                        <input class="uk-input" type="text" placeholder="RG" id="conta-rg" value="@Logged.Rg">
+                    </div>
                 </div>
-            </div>
 
-            <div class="uk-margin">
-                <div class="uk-form-controls">
-                    <input class="uk-input" type="email" placeholder="E-mail" id="conta-email" value="@Logged.Email">
+                <div class="uk-margin">
+                    <div class="uk-form-controls">
+                        <input class="uk-input" type="email" placeholder="E-mail" id="conta-email" value="@Logged.Email">
+                    </div>
                 </div>
-            </div>
 
-            <div class="uk-margin">
-                <div class="uk-form-controls">
-                    <input class="uk-input" type="password" id="conta-password" placeholder="Senha">
+                <div class="uk-margin">
+                    <div class="uk-form-controls">
+                        <input class="uk-input" type="password" id="conta-password" placeholder="Senha">
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
 
-        <p class="uk-text-right">
-            <button class="uk-button uk-button-default" type="button" onclick="$('#conta-form')[0].reset()">LIMPAR</button>
-            <button class="uk-button uk-button-primary" id="conta-submit" type="button" onclick="$('#conta-form').submit()">SALVAR</button>
-        </p>
+            <p class="uk-text-right">
+                <a class="uk-button uk-button-default" asp-controller="Account" asp-action="Logout">SAIR</a>
+                <button class="uk-button uk-button-primary" id="conta-submit" type="button" onclick="$('#conta-form').submit()">SALVAR</button>
+            </p>
+        </div>
     </div>
-</div>
+}
