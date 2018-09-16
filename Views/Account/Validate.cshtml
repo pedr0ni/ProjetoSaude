@@ -1,28 +1,17 @@
-﻿@{
-    ViewData["Title"] = "Recuperar Senha";
-}
-
-<h2>Recuperar Senha</h2>
-
-<hr />
+﻿<h1 class="uk-h1">Recuperar Senha</h1>
+<p class="uk-text-lead">Utilize o código recebido em seu e-mail.</p>
 
 @Html.Partial("Alert")
 
-<form asp-controller="Account" asp-action="InputValidate" method="post">
-    <div class="form-group">
-        <label>CPF</label>
-        <input id="cpf" name="Cpf" type="text" class="form-control" placeholder="Ex. 12345678912">
+<form asp-controller="Account" asp-action="ValidatePost" method="post">
+    <div class="uk-margin">
+        <input class="uk-input" type="text" placeholder="CPF" name="Cpf" required>
     </div>
-    <div class="form-group">
-        <label>Nova Senha</label>
-        <input id="senha" name="NovaSenha" type="password" class="form-control" placeholder="Digite uma nova senha">
+    <div class="uk-margin">
+        <input class="uk-input" type="password" placeholder="Nova Senha" name="NovaSenha" required>
     </div>
-    <div class="form-group">
-        <label>Token</label>
-        <input id="token" name="Token" type="text" class="form-control" placeholder="Digite o Token recebido" maxlength="8" value="@Context.Request.Query["Token"]">
+    <div class="uk-margin">
+        <input class="uk-input" type="text" placeholder="Token" value="@Context.Request.Query["Token"]" name="Token" required>
     </div>
-
-    @Html.AntiForgeryToken()
-    <button type="submit" class="btn btn-warning">ALTERAR SENHA</button>
-    <a asp-area="" asp-controller="Account" asp-action="Login" class="pull-right">Lembrou sua senha? Fazer login</a>
+    <button class="uk-button uk-button-primary" type="submit">ALTERAR SENHA</button>
 </form>

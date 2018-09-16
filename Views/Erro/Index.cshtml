@@ -1,0 +1,40 @@
+﻿@model int
+@{
+    Layout = null;
+
+    string Message = "Erro desconhecido. Contate o administrador do site.";
+
+    switch (Model)
+    {
+        case 404:
+            Message = "A página solicitada não foi encontrada.";
+            break;
+        case 500:
+            Message = "Ocorreu um erro ao processar a requisição no servidor.";
+            break;
+
+    }
+}
+
+<html lang="pt-br">
+    <head>
+        <title>LifeLink - Erro @Model</title>
+        <link rel="stylesheet" href="~/uikit/css/erro.css" />
+    </head>
+
+    <body>
+
+        <div class="mars"></div>
+        <img src="https://mars-404.templateku.co/img/meteor.svg" class="meteor" />
+        <p class="title">@Model</p>
+        <p class="subtitle">
+            @Message
+        </p>
+        <div align="center">
+            <a class="btn-back" asp-controller="Home" asp-action="Index">VOLTAR PARA O INÍCIO</a>
+        </div>
+        <img src="~/images/doctor.png" class="astronaut" />
+        <img src="https://mars-404.templateku.co/img/spaceship.svg" class="spaceship" />
+
+    </body>
+</html>

@@ -36,7 +36,7 @@ namespace ProjetoSaude.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public async Task<IActionResult> LoginPost(IUser model)
+        public async Task<IActionResult> LoginPost(IUser model, string ReturnUrl)
         {
             IUser result = this._context.Users.SingleOrDefault(u => u.Cpf == model.Cpf && u.Senha == new Cripto(model.Senha).Encrypted);
 
@@ -83,18 +83,16 @@ namespace ProjetoSaude.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> InputRecover(FUserRecover user)
+        public async Task<IActionResult> RecoverPost(FUserRecover user)
         {
             IUser result = this._context.Users.SingleOrDefault(u => u.Cpf == user.Cpf && u.Email == user.Email);
+            string Message = "Não existe nenhuma conta com esse CPF e E-mail.";
             if (result != null)
             {
-                this._appManager.addAlert("success", "Enviamos um e-mail para " + result.Email + " com instruções para recuperar a senha.", this.HttpContext);
                 await this._appManager.sendRecoveryEmail(result, this._context);
-            } else
-            {
-                this._appManager.addAlert("danger", "Não existe nenhuma conta com esse CPF e E-mail.", this.HttpContext);
+                Message = "Um e-mail foi enviado com instruções para recuperar a senha.";
             }
-            return RedirectToAction("Recover", "Account");
+            return Ok(new { Success = result != null, Message});
         }
 
         [AllowAnonymous]
@@ -112,14 +110,14 @@ namespace ProjetoSaude.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public async Task<IActionResult> InputValidate(FValidateToken validateToken)
+        public async Task<IActionResult> ValidatePost(FValidateToken validateToken)
         {
             IUser user = this._context.Users.SingleOrDefault(u => u.Cpf == validateToken.Cpf);
 
             if (user == null)
             {
                 this._appManager.addAlert("danger", "O CPF inserido não existe.", this.HttpContext);
-                return RedirectToAction("Validate", "Account");
+                return RedirectToAction("Validate", "Account", new { validateToken.Token });
             }
 
             IUserRecover recover = this._context.UsersRecover.SingleOrDefault(r => r.Token == validateToken.Token && r.UserId == user.Id);
@@ -127,25 +125,25 @@ namespace ProjetoSaude.Controllers
             if (recover == null)
             {
                 this._appManager.addAlert("danger", "O Token inserido está incorreto.", this.HttpContext);
-                return RedirectToAction("Recover", "Account");
+                return RedirectToAction("Validate", "Account", new { validateToken.Token });
             }
 
             if (recover.Validated)
             {
                 this._appManager.addAlert("warning", "O Token inserido já foi validado.", this.HttpContext);
-                return RedirectToAction("Recover", "Account");
+                return RedirectToAction("Validate", "Account", new { validateToken.Token });
             }
 
             if (new Cripto(validateToken.NovaSenha).Encrypted == user.Senha)
             {
                 this._appManager.addAlert("danger", "Você não pode utilizar uma senha igual a antiga.", this.HttpContext);
-                return RedirectToAction("Validate", "Account");
+                return RedirectToAction("Validate", "Account", new { validateToken.Token });
             }
 
             if (this._appManager.Timestamp - recover.Created > 86400) // 86400 = 1 dia
             {
                 this._appManager.addAlert("danger", "Este Token já expirou faz mais de 1 dia. Envie um e-mail novamente para recupearar sua senha.", this.HttpContext);
-                return RedirectToAction("Validate", "Account");
+                return RedirectToAction("Validate", "Account", new { validateToken.Token });
             }
 
             user.Senha = new Cripto(validateToken.NovaSenha).Encrypted;
@@ -156,7 +154,7 @@ namespace ProjetoSaude.Controllers
             this._appManager.addAlert("success", "Sua senha foi alterada com sucesso. ", this.HttpContext);
             await this._context.SaveChangesAsync();
 
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Edit(int id)

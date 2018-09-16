@@ -85,8 +85,10 @@ namespace ProjetoSaude
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Erro");
             }
+
+            app.UseStatusCodePagesWithRedirects("/Erro/{0}");
 
             app.UseStaticFiles();
             app.UseAuthentication();

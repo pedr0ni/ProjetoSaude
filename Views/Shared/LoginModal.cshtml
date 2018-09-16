@@ -5,20 +5,41 @@
         <form id="login-form">
             <div class="uk-margin">
                 <div class="uk-form-controls">
-                    <input class="uk-input" id="login-cpf" type="text" placeholder="CPF" name="Cpf">
+                    <input class="uk-input" id="login-cpf" type="text" placeholder="CPF">
                 </div>
             </div>
 
             <div class="uk-margin">
                 <div class="uk-form-controls">
-                    <input class="uk-input" id="login-password" type="password" placeholder="Senha" name="Senha">
+                    <input class="uk-input" id="login-password" type="password" placeholder="Senha">
                 </div>
             </div>
         </form>
+        <button class="uk-button uk-button-default" type="button" onclick="$('#login-form')[0].reset()">LIMPAR</button>
+        <button class="uk-button uk-button-primary" id="login-submit" type="button" onclick="$('#login-form').submit()">ENTRAR</button>
+            <a href="#modal-recover" style="float: right;" uk-toggle>Esqueci senha</a>
+    </div>
+</div>
 
-        <p class="uk-text-right">
-            <button class="uk-button uk-button-default" type="button" onclick="$('#login-form')[0].reset()">LIMPAR</button>
-            <button class="uk-button uk-button-primary" id="login-submit" type="button" onclick="$('#login-form').submit()">ENTRAR</button>
-        </p>
+<div id="modal-recover" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Recuperar Senha</h2>
+        <p class="uk-text-lead">Enviaremos um e-mail com um código de recuperação e instruções.</p>
+        <form id="recover-form">
+            <div class="uk-margin">
+                <div class="uk-form-controls">
+                    <input class="uk-input" id="recover-cpf" type="text" placeholder="CPF">
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <div class="uk-form-controls">
+                    <input class="uk-input" id="recover-email" type="email" placeholder="E-mail">
+                </div>
+            </div>
+        </form>
+        <button class="uk-button uk-button-default" type="button" onclick="$('#recover-form')[0].reset()">LIMPAR</button>
+        <button class="uk-button uk-button-primary" id="recover-submit" type="button" onclick="$('#recover-form').submit()">ENVIAR</button>
+        <a href="#modal-login" style="float: right;" uk-toggle>Fazer login</a>
     </div>
 </div>

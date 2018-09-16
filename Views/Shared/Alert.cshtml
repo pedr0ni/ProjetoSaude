@@ -1,7 +1,8 @@
 ﻿@if (Context.Request.Cookies["Type"] != null && Context.Request.Cookies["Message"] != null)
 {
-    <div class="alert alert-@Context.Request.Cookies["Type"]">
-        @Context.Request.Cookies["Message"]
+    <div class="uk-alert-@Context.Request.Cookies["Type"]" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p>@Context.Request.Cookies["Message"]</p>
     </div>
     Context.Response.Cookies.Delete("Type");
     Context.Response.Cookies.Delete("Message");

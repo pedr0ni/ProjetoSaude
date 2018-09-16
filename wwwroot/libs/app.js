@@ -41,6 +41,9 @@ $('#login-form').on('submit', (event) => {
 
     resetInputs([login_cpf, login_password]);
 
+    let url = new URL(window.location.href);
+    let ReturnUrl = url.searchParams.get("ReturnUrl");
+
     setTimeout(() => {
         $.ajax({
             url: "/Account/LoginPost",
@@ -58,7 +61,12 @@ $('#login-form').on('submit', (event) => {
                 removeSpinner(login_submit);
                 UIkit.modal.alert(result.message);
                 if (result.authenticated) {
-                    setTimeout(() => location.reload(), 1500);
+
+                    if (ReturnUrl != null)
+                        setTimeout(() => window.location = window.location.origin + ReturnUrl, 1500);
+                    else
+                        setTimeout(() => location.reload(), 1500);
+
                 } else {
                     login_submit.html("ENTRAR");
                 }
@@ -82,9 +90,12 @@ $('#register-form').on('submit', (event) => {
     let reg_email = $('#register-email');
     let reg_password = $('#register-password');
 
-    if (!validateInputs([reg_cpf, reg_nome, reg_rg, reg_email, reg_password])) return;
+    let inputs = [reg_cpf, reg_nome, reg_rg, reg_email, reg_password];
+
+    if (!validateInputs(inputs)) return;
 
     addSpinner(reg_submit);
+    resetInputs(inputs);
 
     setTimeout(() => {
         $.ajax({
@@ -105,7 +116,7 @@ $('#register-form').on('submit', (event) => {
                 removeSpinner(reg_submit);
                  UIkit.modal.alert(result.message);
                 if (!result.success) {
-                    reg_submit.html("ENTRAR");
+                    reg_submit.html("REGISTRAR");
                 }
             },
             error: (error) => {
@@ -115,4 +126,41 @@ $('#register-form').on('submit', (event) => {
             }
         });
     }, 1500);
+});
+
+$("#recover-form").on('submit', (event) => {
+    event.preventDefault();
+
+    let recover_submit = $("#recover-submit");
+    let recover_cpf = $("#recover-cpf");
+    let recover_email = $("#recover-email");
+
+    if (!validateInputs([recover_cpf, recover_email])) return;
+    addSpinner(recover_submit);
+    resetInputs([recover_cpf, recover_email]);
+
+    $.ajax({
+        url: "/Account/RecoverPost",
+        method: "post",
+        headers: {
+            'RequestVerificationToken': getToken()
+        },
+        data: {
+            Cpf: recover_cpf.val(),
+            Email: recover_email.val()
+        },
+        dataType: "json",
+        success: (result) => {
+            removeSpinner(recover_submit);
+            UIkit.modal.alert(result.message);
+            if (!result.success) {
+                recover_submit.html("ENVIAR");
+            }
+        },
+        error: (error) => {
+            removeSpinner(recover_submit);
+            recover_submit.html("ENVIAR");
+            UIkit.modal.alert(error.message);
+        }
+    });
 });
