@@ -22,7 +22,8 @@
 
 <div id="resultados" style="visibility: hidden">
     <h1 class="uk-g1">Resultados</h1>
-    <p class="uk-text-lead">Seu IMC é <strong id="resultado"></strong></p>
+    <p class="uk-text-lead">Seu IMC é<strong id="resultado"></strong></p>
+    <p class="uk-text-lead">Sua Classificação:  <strong id="classificacao"></strong></p>
 </div>
 
 @section Scripts {
@@ -47,8 +48,8 @@
             console.log('submited');
             event.preventDefault();
 
-            let peso = parseFloat($('#imc-peso').val());
-            let altura = parseFloat($('#imc-altura').val());
+            let peso = parseFloat($('#imc-peso').val().replace(",","."));
+            let altura = parseFloat($('#imc-altura').val().replace(",", "."));
 
             $('#imc-peso').removeClass('uk-form-danger');
             $('#imc-altura').removeClass('uk-form-danger');
@@ -59,7 +60,22 @@
                 $('#resultados').css('visibility', 'hidden');
                 return;
             }
-            
+
+            if (imc < 18.5)
+                $('#classificacao').html("Abaixo do Peso");
+            else if(imc >= 18.6 && imc <= 24.9 )
+                $('#classificacao').html("Peso Ideal");
+            else if (imc >= 25 && imc <= 29.9)
+                $('#classificacao').html("Levemente Acima do peso");
+            else if (imc >= 30 && imc <= 34.9)
+                $('#classificacao').html("Obesidade Grau I");
+            else if (imc >= 35 && imc <= 39.9)
+                $('#classificacao').html("Obesidade Grau II (Severa)");
+            else if (imc > 40)
+                $('#classificacao').html("Obesidade Grau III (Morbida)");
+
+
+
             $('#resultados').css('visibility', 'visible');
             $('#resultado').html(imc.toFixed(2));
            

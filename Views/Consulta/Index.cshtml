@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewData["Title"] = "Consulta";
+}
+
+<h1 class="uk-h1">Agende Sua Consulta!</h1>
+<p class="uk-text-lead">Vamos Começar!</p>
+<hr class="uk-divider-icon" />
+<form id="form-imc">
+    <div class="uk-margin">
+        <input class="uk-input" type="text" id="consulta-nome" placeholder="Nome Ex: José Antonio">
+    </div>
+    <div class="uk-margin">
+        <input class="uk-input" type="text" id="consulta-cpf" placeholder="CPF Ex: 514.566.125-15">
+    </div>
+    <div class="uk-margin">
+        <input id="consulta-date" class="uk-input" type="date" placeholder="Dia">
+    </div>
+    <div class="uk-margin">
+        <select class="uk-text-lead" multiple style="width:90px;height:150px;">
+            <option>13:30</option>
+            <option>14:00</option>
+            <option>14:30</option>
+        </select>
+    </div>
+
+    <button class="uk-button uk-button-default" type="reset">LIMPAR</button>
+    <button class="uk-button uk-button-primary" type="submit">MARCAR</button>
+</form>
+<hr class="uk-divider-icon" />
